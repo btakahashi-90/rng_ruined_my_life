@@ -1,0 +1,97 @@
+[gd_scene load_steps=2 format=3 uid="uid://ds2xy33r8vr8u"]
+
+[ext_resource type="Script" uid="uid://dvu7e0cd6to02" path="res://scripts/main_ui.gd" id="1_fnul3"]
+
+[node name="main_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_fnul3")
+
+[node name="vbox_container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="graph_panel" type="Panel" parent="vbox_container"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="roll_line" type="Line2D" parent="vbox_container/graph_panel"]
+width = 3.0
+default_color = Color(0, 0.338914, 0.806011, 1)
+antialiased = true
+
+[node name="success_line" type="Line2D" parent="vbox_container/graph_panel"]
+width = 3.0
+default_color = Color(0.0431373, 0.603922, 0.0352941, 1)
+antialiased = true
+
+[node name="fail_line" type="Line2D" parent="vbox_container/graph_panel"]
+width = 3.0
+default_color = Color(0.687524, 0.0301934, 0.0167878, 1)
+antialiased = true
+
+[node name="threshold_line" type="Line2D" parent="vbox_container/graph_panel"]
+width = 2.0
+default_color = Color(0.801681, 0.675668, 0, 1)
+antialiased = true
+
+[node name="bottom_ui_container" type="VBoxContainer" parent="vbox_container"]
+layout_mode = 2
+
+[node name="chance_input_row" type="HBoxContainer" parent="vbox_container/bottom_ui_container"]
+layout_mode = 2
+
+[node name="chance_label" type="Label" parent="vbox_container/bottom_ui_container/chance_input_row"]
+layout_mode = 2
+text = "Success %:"
+
+[node name="chance_input" type="LineEdit" parent="vbox_container/bottom_ui_container/chance_input_row"]
+layout_mode = 2
+text = "50"
+placeholder_text = "e.g. 75"
+
+[node name="roll_button" type="Button" parent="vbox_container/bottom_ui_container/chance_input_row"]
+layout_mode = 2
+text = "Roll"
+
+[node name="modifiers_row" type="HBoxContainer" parent="vbox_container/bottom_ui_container"]
+layout_mode = 2
+
+[node name="log_output" type="TextEdit" parent="vbox_container/bottom_ui_container"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+
+[node name="stats_label" type="Label" parent="vbox_container/bottom_ui_container"]
+layout_mode = 2
+text = "Success: 0 | Fail: 0 | Calculated Average: 0"
+
+[node name="blast_row" type="HBoxContainer" parent="vbox_container/bottom_ui_container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="vbox_container/bottom_ui_container/blast_row"]
+layout_mode = 2
+text = "Blast Size: "
+
+[node name="blast_count_input" type="LineEdit" parent="vbox_container/bottom_ui_container/blast_row"]
+layout_mode = 2
+placeholder_text = "10000"
+
+[node name="blast_button" type="Button" parent="vbox_container/bottom_ui_container/blast_row"]
+layout_mode = 2
+text = "FIRE MASS ROLLS
+"
+
+[node name="confirm_blast_dialog" type="ConfirmationDialog" parent="."]

@@ -1,0 +1,27 @@
+# Godot-specific
+.godot/
+.import/
+export_presets.cfg
+
+# Build artifacts (if exporting)
+*.exe
+*.dll
+*.apk
+*.aab
+*.pck
+*.zip
+
+# OS-generated
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor-only files
+/.godot/
+/android/
+/ios/
+/.mono/
+
+# Optional: exclude user-specific configs
+*.cfg
+*.log
