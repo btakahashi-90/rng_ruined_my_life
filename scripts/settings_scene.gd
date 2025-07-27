@@ -6,6 +6,7 @@ extends Control
 @onready var back_button = $back_button
 
 func _ready() -> void:
+	_set_toggles()
 	unicorn_toggle.toggled.connect(_on_unicorn_toggled)
 	smoothing_toggle.toggled.connect(_on_smoothing_toggled)
 	restore_button.pressed.connect(_on_restore_defaults_pressed)
@@ -26,3 +27,7 @@ func _on_restore_defaults_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	
+func _set_toggles() -> void:
+	unicorn_toggle.button_pressed = GameSettings.unicorn_mode
+	smoothing_toggle.button_pressed = GameSettings.graph_smoothing

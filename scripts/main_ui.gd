@@ -24,6 +24,9 @@ var last_chance: float = -1.0
 var MAX_SAFE_BLAST = 500000
 var BLAST_WARNING_THRESHOLD = 10000
 var blast_count = 0
+var log_limit = 200
+var num_rolls = 0
+var in_anomaly = false
 
 
 #danger zone
@@ -35,6 +38,14 @@ func _ready():
 	confirm_blast_dialog.confirmed.connect(_on_confirm_blast)
 
 func _on_roll_pressed():
+	# log cleanup before anything else
+	# move this later, for now just see if we're at log_limit data stored
+	if num_rolls > 50:
+		log_cleanup(false)
+		num_rolls = 0
+	else:
+		num_rolls += 1
+	
 	var chance_text = chance_input.text.strip_edges()
 	
 	var chance = float(chance_input.text)
@@ -74,14 +85,26 @@ func _on_roll_pressed():
 
 	
 	var result_text = "SUCCESS" if is_success else "FAIL"
-	
+
+	# anomaly tracking with state and optional spam
 	var z = z_score(success_count, success_count + fail_count, chance)
 	var anomaly_tag = ""
-
+	print(str(success_count) + " : " + str(fail_count) + " : " + str(z))
 	if abs(z) > 3.0:
-		anomaly_tag = " 😱📉 ABSURD ANOMALY"
+		if not in_anomaly:
+			in_anomaly = true
+			anomaly_tag = "😱📉 ABSURD ANOMALY STARTED"
+		else:
+			anomaly_tag = "😱📉 ABSURD ANOMALY" if GameSettings.allow_anomaly_spam else ""
 	elif abs(z) > 2.0:
-		anomaly_tag = " ⚠️🧪"
+		if not in_anomaly:
+			in_anomaly = true
+			anomaly_tag = "⚠️🧪 ANOMALY DETECTED"
+		else:
+			anomaly_tag = "⚠️🧪" if GameSettings.allow_anomaly_spam else ""
+	elif in_anomaly and abs(z) < 1.0:
+		in_anomaly = false
+		anomaly_tag = "✅ Anomaly resolved."
 
 	var log_line = "Rolled %.2f vs %.2f%% → %s%s" % [roll, chance, result_text, anomaly_tag]
 	
@@ -137,7 +160,6 @@ func _update_graph():
 		
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept"):
-		
 		roll_held = true
 	elif event.is_action_released("ui_accept"):
 		roll_held = false
@@ -157,6 +179,9 @@ func z_score(actual_successes: int, total_rolls: int, chance: float) -> float:
 func run_mass_rolls(count := 10000):
 	blast_button.disabled = true
 	blast_count_input.editable = false
+	
+	# cleanup the log before blast
+	log_cleanup(true)
 
 	var chance = float(chance_input.text)
 	
@@ -268,3 +293,27 @@ func _reset_stats():
 
 func _on_confirm_blast():
 	run_mass_rolls(blast_count)
+	
+func log_cleanup(is_blast=false):
+	var lines = log_output.text.split("\n")
+	if is_blast:
+		# clear the whole log
+		log_output.clear()
+	elif lines.size() > log_limit: 
+		# check for log_limit (200) lines, and trim appropriately
+		log_output.text = "\n".join(lines.slice(-log_limit))
+
+# Debug tool: simulate anomaly
+func _on_force_anomaly_pressed():
+	if not in_anomaly:
+		success_count = 0
+		fail_count = 100
+		print("anomaly forced")
+	else:
+		success_count = 0
+		fail_count = 0
+		print("exiting anomaly")
+	
+func _input(event):
+	if event.is_action_pressed("force_anomaly"):
+		_on_force_anomaly_pressed()
