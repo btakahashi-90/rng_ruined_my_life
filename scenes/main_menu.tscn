@@ -69,10 +69,12 @@ text = "Start Game"
 layout_mode = 2
 text = "Settings"
 
-[node name="credits_button" type="Button" parent="VBoxContainer"]
+[node name="info_button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Credits"
+text = "Info n Such"
 
 [node name="exit_button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[node name="settings_not_ready" type="AcceptDialog" parent="."]

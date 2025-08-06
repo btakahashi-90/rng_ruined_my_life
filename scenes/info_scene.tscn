@@ -1,0 +1,95 @@
+[gd_scene load_steps=2 format=3 uid="uid://bo2s5m5pdrjwl"]
+
+[ext_resource type="Script" uid="uid://b2ffy058brodj" path="res://scripts/info_scene.gd" id="1_jrsig"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jrsig")
+
+[node name="title_label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.0
+offset_right = 31.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 64
+text = "Info n Such"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="info_container" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 192.0
+offset_top = 105.0
+offset_right = -181.0
+offset_bottom = -81.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="info_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]What is this?[/b]
+An RNG simulator. A cathartic shrine to suffering.
+Click buttons. Watch numbers betray you. Feel validated.
+
+[b]Why does it exist?[/b]
+To expose just how cursed your luck really is—with data, not just vibes.
+Also: because I thought it’d be funny.
+
+[b]Core Concepts:[/b]
+
+Every roll is tracked.
+
+TODO: Failure increases your success odds (pity scaling). Customizable.
+
+Anomalies? They’re real, and they’re watching.
+
+There is no winning. There is only rolling.
+
+[b]Terms Glossary:[/b]
+
+Z-score: Statistical measure of how far a result strays from average.
+
+Anomaly: A run of improbability too bold to ignore.
+
+Blast Cap: Max number of rolls per batch (safety first).
+
+Merp Mode: Randomized passive rolling. It's fine. Probably. When its implemented...
+
+[b]Credits:[/b]
+Built with love and chaos by Duck Dolphin Studios
+Statistically unlikely since 2025.
+Special thanks to everyone who helped test, break, or survive this.
+ChatGPT refuses to credit itself so I had to add this line manually. :nod:"
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="back_button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.5
+offset_top = -48.0
+offset_right = 22.5
+offset_bottom = -17.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back"
